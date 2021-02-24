@@ -14,6 +14,7 @@ void getPoint(int event, int x, int y, int flags, void* userdata) {
 		src_pts.push_back(p);
 	}
 }
+
 void init() {
 	dest_pts.push_back(Point2f(472, 52));
 	dest_pts.push_back(Point2f(472, 830));
@@ -22,7 +23,6 @@ void init() {
 }
 
 int main() {
-	init();
 
 	Mat img = imread("traffic.jpg", IMREAD_GRAYSCALE);
 
@@ -49,7 +49,6 @@ int main() {
 	imshow("Perspective Change",img_dest);
 	imwrite("Transformed.jpg", img_dest);
 	waitKey(0);
-	
 	
 	Mat cropedImage = img_dest(Rect(472, 52, 328, 778));
 	
