@@ -36,6 +36,19 @@ int main() {
 
 	waitKey(0);
 	
+	int height = img.rows;
+	int width = img.cols;
+	
+	Size size(height, width); 
+	Mat img_dest = Mat::zeros(size, CV_8UC3); 
+
+	Mat homo = findHomography(src_pts,dest_pts);
+
+	warpPerspective(img, img_dest, homo, size);
+	
+	imshow("Perspective Change",img_dest);
+	imwrite("Transformed.jpg", img_dest);
+	waitKey(0);
 	
 	Mat cropedImage = img_dest(Rect(472, 52, 328, 778));
 	
