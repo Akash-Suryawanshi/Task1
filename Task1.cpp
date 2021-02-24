@@ -8,7 +8,6 @@ using namespace cv;
 vector<Point2f>src_pts;
 vector<Point2f>dest_pts;
 
-
 void getPoint(int event, int x, int y, int flags, void* userdata) {
 	if (event == EVENT_LBUTTONDOWN && src_pts.size() < 4) {
 		Point2f p(x, y);
@@ -16,25 +15,26 @@ void getPoint(int event, int x, int y, int flags, void* userdata) {
 	}
 }
 
-//testing function
-void print_selected_points() {
-	for (auto p : src_pts) cout << p << ' ';
-	cout << endl;
-}
-
 int main() {
-	Mat img = imread("Pain.JPG");
+
+	Mat img = imread("traffic.jpg", IMREAD_GRAYSCALE);
 
 	if (img.empty()) return 0;
 
-	namedWindow("Image", 1);	// name the window
+	namedWindow("Image", 1);	
 
 	setMouseCallback("Image", getPoint, NULL);
 
-	imshow("Image", img); // show the image
+	imshow("Image", img); 
 
 	waitKey(0);
-
-	print_selected_points();
-
+	
+	
+	Mat cropedImage = img_dest(Rect(472, 52, 328, 778));
+	
+	imshow("Final", cropedImage);
+	imwrite("CroppedImage.jpg", cropedImage);
+	waitKey(0);
+	
+	return 0;
 }
