@@ -15,6 +15,13 @@ void getPoint(int event, int x, int y, int flags, void* userdata) {
 	}
 }
 
+void init() {
+	dest_pts.push_back(Point2f(472, 52));
+	dest_pts.push_back(Point2f(472, 830));
+	dest_pts.push_back(Point2f(800, 830));
+	dest_pts.push_back(Point2f(800, 52));
+}
+
 int main() {
 
 	Mat img = imread("traffic.jpg", IMREAD_GRAYSCALE);
