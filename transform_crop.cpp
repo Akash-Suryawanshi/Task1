@@ -1,10 +1,10 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "transform_crop.h"
 
 using namespace std;
 using namespace cv;
-
 
 vector<Point2f>src_pts;
 vector<Point2f>dest_pts;
@@ -24,7 +24,7 @@ void init() {
 	dest_pts.push_back(Point2f(800, 52));
 }
  
-public void transform_and_crop(string myimage) {
+void transform_and_crop(string myimage) {
     init();
 
     Mat img = imread(myimage, IMREAD_GRAYSCALE);
@@ -60,7 +60,7 @@ public void transform_and_crop(string myimage) {
 	imwrite("CroppedImage.jpg", cropedImage);
 	waitKey(0);
 	
-	return ;
+	return;
 }
 
 

@@ -146,6 +146,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Task1.cpp" />
+    <ClCompile Include="transform_crop.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="transform_crop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
