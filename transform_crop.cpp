@@ -24,7 +24,7 @@ void init() {
 	dest_pts.push_back(Point2f(800, 52));
 }
  
-void transform_and_crop(string myimage) {
+public void transform_and_crop(string myimage) {
     init();
 
     Mat img = imread(myimage, IMREAD_GRAYSCALE);
