@@ -9,5 +9,6 @@ using namespace cv;
 
 int main() {
 	Mat mypic = transform_and_crop("traffic.jpg");
+	readVideo("trafficvideo.mp4");
 	return 0;
 }

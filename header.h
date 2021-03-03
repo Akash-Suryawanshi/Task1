@@ -1,4 +1,3 @@
-
 #pragma once
 #include "header.h"
 #include "iostream"
@@ -10,4 +9,6 @@ using namespace cv;
 Mat transform_and_crop(string myimage);
 void init();
 void init_srcpts();
+
+void readVideo(string x);
 
