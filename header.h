@@ -12,3 +12,5 @@ void init_srcpts();
 
 void readVideo(string x);
 
+void transform_and_crop(string x);
+

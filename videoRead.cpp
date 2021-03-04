@@ -21,7 +21,7 @@ void readVideo(string x) {
 
 	vector<vector<Point>> contours;
 	vector<Vec4i> hierarchy;
-
+	vector<double> contourAreas;	// countour areas per frame
 	while (1) {
 		Mat frame; // current frame
 		cap >> frame;
@@ -34,6 +34,7 @@ void readVideo(string x) {
 		imshow("FG MASK", transform);
 
 		findContours(transform, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+
 		//imshow("Image", transform);
 		char c = (char)waitKey(25);
 		if (c == 27) {
@@ -44,9 +45,13 @@ void readVideo(string x) {
 	cap.release();
 	destroyAllWindows();
 	
-	for (auto c : contours) {
-		cout << c << ' ';
-	}
+	//for (auto c : contours) {
+	//	//cout << "Area of contour: " << contourArea(c) << endl;
+	//	contourAreas.push_back(contourArea(c));
+	//}
+	//for (auto c : contourAreas) {
+	//	cout << c << endl;
+	//}
 
 	return;
 }
