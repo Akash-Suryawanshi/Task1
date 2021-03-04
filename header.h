@@ -9,8 +9,5 @@ using namespace cv;
 Mat transform_and_crop(Mat img);
 void init();
 void init_srcpts();
-
-void readVideo(string x);
-
+vector<double> readVideo(string x);
 void transform_and_crop(string x);
-
