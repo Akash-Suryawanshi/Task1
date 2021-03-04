@@ -20,7 +20,8 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	
 	// if (!cap.isOpened()) return;
 
-	Mat emptyBG = transform_and_crop(imread("empty.jpg"));
+	Mat emptyBG0 = transform_and_crop(imread("emptyRoad.jpg"));
+	Mat emptyBG;
 	
 	vector<vector<Point>> contours;
 	vector<Vec4i> hierarchy;
@@ -40,10 +41,24 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		pKNN->apply(frame, fgMaskMOG2);
 		Mat transform = transform_and_crop(fgMaskMOG2);
 		imshow("FG MASK", transform);
-		
+		// emptyBG0.cols, emptyBG0.rows
 		Mat diffImage;
+		resize(emptyBG0, emptyBG, Size(transform.cols, transform.rows), 1, 1, INTER_LINEAR);
 		absdiff(emptyBG,transform,diffImage);
-		findContours(diffImage, contoursD, hierarchyD, RETR_TREE, CHAIN_APPROX_SIMPLE);
+		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
+		float threshold = 3.0f;
+    	float dist;
+		for(int j=0; j<diffImage.rows; ++j){
+        	for(int i=0; i<diffImage.cols; ++i){
+            cv::Vec3b pix = diffImage.at<cv::Vec3b>(j,i);
+            dist = (pix[0]*pix[0] + pix[1]*pix[1] + pix[2]*pix[2]);
+            dist = sqrt(dist);
+            if(dist>threshold){            
+                foregroundMask.at<unsigned char>(j,i) = 255;
+            }
+        }
+	}
+		findContours(foregroundMask, contoursD, hierarchyD, RETR_TREE, CHAIN_APPROX_SIMPLE);
 		findContours(transform, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
 		char c = (char)waitKey(25);
 		if (c == 27) {
