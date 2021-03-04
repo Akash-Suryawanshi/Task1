@@ -145,7 +145,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bsub.cpp" />
     <ClCompile Include="Task1.cpp" />
     <ClCompile Include="transform_crop.cpp" />
     <ClCompile Include="videoRead.cpp" />
