@@ -6,7 +6,7 @@
 using namespace std;
 using namespace cv;
 
-Mat transform_and_crop(string myimage);
+Mat transform_and_crop(Mat img);
 void init();
 void init_srcpts();
 

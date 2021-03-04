@@ -12,10 +12,10 @@ vector<Point2f>dest_pts;
 
 
 void init_srcpts() {
-	src_pts.push_back(Point2f(843, 190));
-	src_pts.push_back(Point2f(89, 811));
-	src_pts.push_back(Point2f(1516, 944));
-	src_pts.push_back(Point2f(1271, 203));
+	src_pts.push_back(Point2f(942, 230));
+	src_pts.push_back(Point2f(289, 956));
+	src_pts.push_back(Point2f(1543, 982));
+	src_pts.push_back(Point2f(1276, 228));
 }
 
 
@@ -26,10 +26,9 @@ void init() {
 	dest_pts.push_back(Point2f(800, 52));
 }
  
-Mat transform_and_crop(string myimage) {
+Mat transform_and_crop(Mat img) {
 	init_srcpts();
     init();
-    Mat img = imread(myimage, IMREAD_GRAYSCALE);
 	int height = img.rows;
 	int width = img.cols;
 	Size size(height, width); 

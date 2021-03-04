@@ -17,7 +17,7 @@ void readVideo(string x) {
 		if (frame.empty()) {
 			break;
 		}
-		imshow("Image", frame);
+		imshow("Image", transform_and_crop(frame));
 		char c = (char)waitKey(25);
 		if (c == 27) {
 			break;
