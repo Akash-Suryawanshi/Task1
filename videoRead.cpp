@@ -9,6 +9,7 @@
 //#include <opencv2/bgsegm.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/background_segm.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace std;
 using namespace cv;
@@ -23,7 +24,8 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 
 	Mat emptyBG0 = transform_and_crop(imread("emptyRoad.jpg"));
 	Mat emptyBG;
-	
+	cvtColor(emptyBG0, emptyBG, COLOR_BGR2GRAY);
+	// resize(emptyBG, emptyBG, Size(), 1, 1, INTER_LINEAR);
 	vector<vector<Point>> contours;
 	vector<Vec4i> hierarchy;
 	vector <vector<Point>> contoursD; // contours for difference img
@@ -46,13 +48,10 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		cout << "Transformed Image: ";
 		cout << transform.cols << ' ' << transform.rows << '\n';
 		imshow("FG MASK", transform);
-		Mat croppedFrame = transform_and_crop(frame);
 		// emptyBG0.cols, emptyBG0.rows
 		Mat diffImage;
-		//resize(emptyBG0, emptyBG, Size(transform.cols, transform.rows), 1, 1, INTER_LINEAR);
-		//resize(diffImage, diffImage, Size(frame.cols, frame.rows), 1, 1, INTER_LINEAR);
-		//cvtColor(emptyBG, emptyBG0, COLOR_RGB2GRAY);
-		absdiff(emptyBG0,croppedFrame,diffImage);
+		resize(emptyBG0, emptyBG, Size(transform.cols, transform.rows), 1, 1, INTER_LINEAR);
+		absdiff(emptyBG,transform,diffImage);
 		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
 		float threshold = 30.0f;
     	float dist;
