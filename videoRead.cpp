@@ -50,8 +50,9 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		imshow("FG MASK", transform);
 		// emptyBG0.cols, emptyBG0.rows
 		Mat diffImage;
-		resize(emptyBG0, emptyBG, Size(transform.cols, transform.rows), 1, 1, INTER_LINEAR);
-		absdiff(emptyBG,transform,diffImage);
+		//resize(emptyBG0, emptyBG, Size(transform.cols, transform.rows), 1, 1, INTER_LINEAR);
+		Mat croppedFrame = transform_and_crop(frame);
+		absdiff(emptyBG0,croppedFrame,diffImage);
 		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
 		float threshold = 30.0f;
     	float dist;
