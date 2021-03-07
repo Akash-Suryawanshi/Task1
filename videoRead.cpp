@@ -43,10 +43,6 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		}
 		pKNN->apply(frame, fgMaskMOG2);
 		Mat transform = transform_and_crop(fgMaskMOG2);
-		cout << "Orginal video:";
-		cout << frame.cols << ' ' << frame.rows << '\n';
-		cout << "Transformed Image: ";
-		cout << transform.cols << ' ' << transform.rows << '\n';
 		imshow("FG MASK", transform);
 		// emptyBG0.cols, emptyBG0.rows
 		Mat diffImage;
@@ -54,7 +50,11 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat croppedFrame = transform_and_crop(frame);
 		absdiff(emptyBG0,croppedFrame,diffImage);
 		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
+<<<<<<< HEAD
 		float threshold = 77.00;
+=======
+		float threshold = 77.0f;
+>>>>>>> 9632df1263a462e9b56c4196d3c835edacb2bf80
     	float dist;
 		for(int j=0; j<diffImage.rows; ++j){
         	for(int i=0; i<diffImage.cols; ++i){
@@ -77,7 +77,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	}
 	cap.release();
 	destroyAllWindows();
-	// ofstream MyFile("Area.txt");
+	ofstream MyFile("Area.txt");
 	for (auto c : contours) {
 		// cout << contourArea(c) << endl;
 		// MyFile << contourArea(c);
