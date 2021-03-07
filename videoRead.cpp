@@ -34,6 +34,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	vector<double> contourAreas;	// countour areas per frame
 	vector<double> time;
 	double t = 0;
+	ofstream MyFile("Queue_area.txt");
 	while (1) {
 		Mat frame; // current frame
 		cap >> frame;
@@ -63,25 +64,26 @@ pair<vector<double>,vector<double>> readVideo(string x) {
         }
 	}
 		imshow("Difference Image", foregroundMask);
-		//findContours(foregroundMask, contoursD, hierarchyD, RETR_TREE, CHAIN_APPROX_SIMPLE);
+		findContours(foregroundMask, contoursD, hierarchyD, RETR_TREE, CHAIN_APPROX_SIMPLE);
 		findContours(transform, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
 		char c = (char)waitKey(25);
 		if (c == 27) {
 			break;
-		}
-
+		} 
 	}
 	cap.release();
 	destroyAllWindows();
-	ofstream MyFile("Area.txt");
-	for (auto c : contours) {
+	
+	// ofstream MyFile("Area_Dynamic_Time.txt");
+	for (auto c : contoursD) {
 		// cout << contourArea(c) << endl;
-		// MyFile << contourArea(c);
+		
+		// MyFile << t;
 		time.push_back(t);
 		contourAreas.push_back(contourArea(c));
 		t += 1.0/15.0;
 	}
-	// MyFile.close();
+	MyFile.close();
 	for (auto c : contoursD) {
 		contourAreasD.push_back(contourArea(c));
 	}
