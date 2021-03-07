@@ -8,6 +8,7 @@
 #include <opencv2/bgsegm.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/background_segm.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace std;
 using namespace cv;
@@ -22,7 +23,8 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 
 	Mat emptyBG0 = transform_and_crop(imread("emptyRoad.jpg"));
 	Mat emptyBG;
-	
+	cvtColor(emptyBG0, emptyBG, COLOR_BGR2GRAY);
+	// resize(emptyBG, emptyBG, Size(), 1, 1, INTER_LINEAR);
 	vector<vector<Point>> contours;
 	vector<Vec4i> hierarchy;
 	vector <vector<Point>> contoursD; // contours for difference img
@@ -41,9 +43,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		pKNN->apply(frame, fgMaskMOG2);
 		Mat transform = transform_and_crop(fgMaskMOG2);
 		imshow("FG MASK", transform);
-		// emptyBG0.cols, emptyBG0.rows
 		Mat diffImage;
-		resize(emptyBG0, emptyBG, Size(transform.cols, transform.rows), 1, 1, INTER_LINEAR);
 		absdiff(emptyBG,transform,diffImage);
 		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
 		float threshold = 3.0f;
