@@ -1,5 +1,6 @@
-				## README ##				Date: 24th February, 2021
-By:- Prakul Virdi 		: 2019CS50442
+		## README ##				Date: 24th February, 2021
+		
+By:- Prakul Virdi 	: 2019CS50442
      Akash Suryawanshi 	: 2019CS50416
      
 run the following commands:
