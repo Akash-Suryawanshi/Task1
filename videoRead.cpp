@@ -50,11 +50,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat croppedFrame = transform_and_crop(frame);
 		absdiff(emptyBG0,croppedFrame,diffImage);
 		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
-<<<<<<< HEAD
-		float threshold = 77.00;
-=======
 		float threshold = 77.0f;
->>>>>>> 9632df1263a462e9b56c4196d3c835edacb2bf80
     	float dist;
 		for(int j=0; j<diffImage.rows; ++j){
         	for(int i=0; i<diffImage.cols; ++i){
