@@ -51,12 +51,11 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		if (frame.empty()) {
 			break;
 		}
-		pKNN->apply(frame, fgMaskMOG2);
-		Mat transform = transform_and_crop(fgMaskMOG2);
-		imshow("FG MASK", transform);
+		Mat croppedFrame = transform_and_crop(frame);
+		pKNN->apply(croppedFrame, fgMaskMOG2);
+		imshow("FG MASK", fgMaskMOG2);
 		// emptyBG0.cols, emptyBG0.rows
 		Mat diffImage;
-		Mat croppedFrame = transform_and_crop(frame);
 		absdiff(emptyBG0,croppedFrame,diffImage);
 		Mat foregroundMask = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
 		float threshold = 77.0f;
@@ -73,7 +72,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	}
 		imshow("Difference Image", foregroundMask);
 		contourAreasQueue.push_back(area(foregroundMask));
-		contourAreasDynamic.push_back(area(transform));
+		contourAreasDynamic.push_back(area(fgMaskMOG2));
 		char c = (char)waitKey(25);
 		if (c == 27) {
 			break;
