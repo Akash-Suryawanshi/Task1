@@ -9,10 +9,9 @@ using namespace cv;
 
 int main() {
 	pair <vector<double>, vector<double>>densities;
-	densities = readVideo("trafficvideo.mp4");
+	densities = readVideo("tfv.mp4");
 	vector<double>QueueDensity = densities.first;
 	vector<double>DynamicDensity = densities.second;
-
 	cout << "framenum" << '\t' << '\t' << "queue density" << '\t' << '\t' << "dynamic density";
 	cout << endl;
 	for (int i = 0; i < QueueDensity.size(); i++) {
