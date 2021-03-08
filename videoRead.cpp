@@ -45,7 +45,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	vector<double> contourAreasDynamic;	// countour areas per frame
 	vector<double> time;
 	double t = 0;
-	ofstream MyFile("Dynamic_area.txt");
+	ofstream MyFile("Queue_area_GSOC.txt");
 	while (1) {
 		Mat frame; // current frame
 		cap >> frame;
@@ -84,10 +84,8 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	destroyAllWindows();
 	
 	for (int i = 0; i < contourAreasQueue.size(); i++){
-		MyFile <<  contourAreasDynamic[i] << endl;
+		MyFile <<  contourAreasQueue[i] << endl;
 	}
-	
-	
 
 	MyFile.close();
 
