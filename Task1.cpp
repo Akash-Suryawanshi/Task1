@@ -9,7 +9,7 @@ using namespace cv;
 
 int main() {
 	//Mat mypic = transform_and_crop("traffic.jpg");
-	readVideo("queue_density_30s.mp4");
+	readVideo("tfv.mp4");
 	//transform_and_crop("traffic.jpg");
 	return 0;
 }
