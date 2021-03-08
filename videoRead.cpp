@@ -23,7 +23,7 @@ double areaQueue(Mat img) {
 			}
 		}
 	} 
-	return ans/(img.rows * img.cols) + 0.20;
+	return ans/(img.rows * img.cols)*1.25;
 }
 double areaDynamic(Mat img) {
 	double ans = 0;
