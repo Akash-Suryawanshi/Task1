@@ -8,8 +8,18 @@ using namespace cv;
 
 
 int main() {
-	//Mat mypic = transform_and_crop("traffic.jpg");
-	readVideo("trafficvideo.mp4");
-	//transform_and_crop("traffic.jpg");
+	pair <vector<double>, vector<double>>densities;
+	densities = readVideo("trafficvideo.mp4");
+	vector<double>QueueDensity = densities.first;
+	vector<double>DynamicDensity = densities.second;
+
+	cout << "framenum" << '\t' << '\t' << "queue density" << '\t' << '\t' << "dynamic density";
+	cout << endl;
+	for (int i = 0; i < QueueDensity.size(); i++) {
+		cout << i+1 << '\t' << '\t';
+		cout << QueueDensity[i] << '\t' << '\t';
+		cout << DynamicDensity[i] << '\t' << '\t';
+		cout << endl;
+	}
 	return 0;
 }
