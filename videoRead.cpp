@@ -61,9 +61,15 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	Mat emptyBG;
 	cvtColor(emptyBG0, emptyBG, COLOR_BGR2GRAY);
 	ofstream MyFile("hull_Q.txt");
+	int X = 3; // process every Xth frame
 	while (1) {
 		Mat frame; 
 		cap >> frame;
+
+		bool status;
+		for(int i=0; i<X; i++){
+			status = cap.read(frame);
+		}
 
 		if (frame.empty()) {
 			break;
