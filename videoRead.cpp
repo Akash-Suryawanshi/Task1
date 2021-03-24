@@ -47,7 +47,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		
 	pKNN = bgsegm::createBackgroundSubtractorGSOC(); // background subtractor objects
 	// virtual void bgsegm::createBackgroundSubtractorMOG.setVarThreshold(varThreshold);
-	Mat emt = imread("emptyRoad.jpg");
+	Mat emt = imread("frame.jpg");
 	Mat emt0;
 	Mat emptyBG0 = transform_and_crop(emt);
 	resize(emptyBG0, emptyBG0, Size(360, 240));
@@ -64,8 +64,8 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	while (1) {
 		Mat frame; 
 		cap >> frame;
-
-		int X = 1;
+		
+		int X = 15;
 		bool status;
 		for(int i=0; i<X; i++){
 			status = cap.read(frame);
@@ -75,8 +75,9 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 			break;
 		}
 		
-
+		
 		Mat croppedFrame = transform_and_crop(frame);
+		imshow("frame.jpg", croppedFrame);
 		resize(croppedFrame, croppedFrame, Size(360, 240));
 
 		pKNN->apply(croppedFrame, Dframe);
