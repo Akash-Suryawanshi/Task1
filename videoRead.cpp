@@ -84,13 +84,26 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 
 		pKNN->apply(croppedFrame, Dframe);
 		imshow("FG MASK", Dframe);
-		
+		Mat croppedFrame0 = croppedFrame;
+		cvtColor(croppedFrame, croppedFrame0, COLOR_BGR2GRAY);
+		GaussianBlur(croppedFrame0, croppedFrame0, Size(21, 21), 0);
+
 		Mat diffImage;
-		absdiff(emptyBG0,croppedFrame,diffImage);
+		Mat diffImage0;
+		absdiff(croppedFrame0, emptyBG,diffImage0);
+		absdiff(croppedFrame, emptyBG0,diffImage);
+		imshow("diffImage0", diffImage0);
+		// Mat thresh = threshold(diffImage, 25, 255, THRESH_BINARY)[1];
+    	// dilate(thresh, none, iterations=2);
+		// imshow("thresh", thresh);
+
 		Mat Qframe = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
 		float threshold = 77.0f;
     	float dist;
+		// imshow("diff", diffImage);
+
 		
+
 		for(int j=0; j<diffImage.rows; ++j){
         	for(int i=0; i<diffImage.cols; ++i){
 				cv::Vec3b pix = diffImage.at<cv::Vec3b>(j,i);
@@ -101,6 +114,17 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 				}
 			}
 		}
+		for(int j=0; j<diffImage.rows; ++j){
+        	for(int i=0; i<diffImage.cols; ++i){
+				cv::Vec3b pix = diffImage.at<cv::Vec3b>(j,i);
+				dist = (pix[0]*pix[0] + pix[1]*pix[1] + pix[2]*pix[2]);
+				dist = sqrt(dist);
+				if(dist>threshold){            
+					Qframe.at<unsigned char>(j,i) = 255;
+				}
+			}
+		}
+
 		imshow("Difference Image", Qframe);
 		
 		//contourAreasQueue.push_back(areaQueue(Qframe));
