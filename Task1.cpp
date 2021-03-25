@@ -9,15 +9,15 @@ using namespace cv;
 
 int main() {
 	pair <vector<double>, vector<double>>densities;
-	densities = readVideo("trafficvideo.mp4");
+	densities = readVideo("tfv.mp4");
 	vector<double>QueueDensity = densities.first;
 	vector<double>DynamicDensity = densities.second;
-	cout << "framenum" << '\t' << '\t' << "queue density" << '\t' << '\t' << "dynamic density";
+	cout << "framenum" << "," << "queue density" << "," << "dynamic density";
 	cout << endl;
 	for (int i = 0; i < QueueDensity.size(); i++) {
-		cout << i+1 << '\t' << '\t';
-		cout << QueueDensity[i] << '\t' << '\t';
-		cout << DynamicDensity[i] << '\t' << '\t';
+		cout << i+1 << ",";
+		cout << QueueDensity[i] << ",";
+		cout << DynamicDensity[i] << "\n";
 		cout << endl;
 	}
 	return 0;

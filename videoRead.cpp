@@ -60,15 +60,17 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	vector<double> contourAreasDynamic;	
 	
 	ofstream MyFile("hull_Q.txt");
-
+	bool first = true;
 	while (1) {
 		Mat frame; 
 		cap >> frame;
 		
-		int X = 15;
-		bool status;
-		for(int i=0; i<X; i++){
-			status = cap.read(frame);
+		int X = 4; // We skip next X frames
+		if(!first){
+			bool status;
+			for(int i=0; i<X; i++){
+				status = cap.read(frame);
+			}
 		}
 
 		if (frame.empty()) {
@@ -101,9 +103,17 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		}
 		imshow("Difference Image", Qframe);
 		
-		contourAreasQueue.push_back(areaQueue(Qframe));
-		contourAreasDynamic.push_back(areaDynamic(Dframe));
+		//contourAreasQueue.push_back(areaQueue(Qframe));
+		//contourAreasDynamic.push_back(areaDynamic(Dframe));
+		double QueueArea = areaQueue(Qframe);
+		double DynamicArea = areaDynamic(Dframe);
+
+		for(int i=0; i<=X; i++){
+				contourAreasQueue.push_back(QueueArea);
+				contourAreasDynamic.push_back(DynamicArea);
+		}
 		
+		first = false;
 		char c = (char)waitKey(25);
 		if (c == 27) {
 			break;
