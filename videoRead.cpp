@@ -65,7 +65,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat frame; 
 		cap >> frame;
 		
-		int X = 4; // We skip next X frames
+		int X = 3; // We skip next X frames
 		if(!first){
 			bool status;
 			for(int i=0; i<X; i++){
