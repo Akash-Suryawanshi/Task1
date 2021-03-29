@@ -94,9 +94,11 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat croppedFrame0 = croppedFrame;
 		cvtColor(croppedFrame, croppedFrame0, COLOR_BGR2GRAY);
 		GaussianBlur(croppedFrame0, croppedFrame0, Size(3, 3), 0);
+
 		Mat diffImage0;
 		absdiff(croppedFrame0, emptyBG,diffImage0);
 		imshow("diffImage0", diffImage0);
+		
 		threshold(diffImage0, diffImage0, 50, 255, THRESH_BINARY);
     	dilate(diffImage0, diffImage0, Mat(), Point(-1, -1), niters*2);
 		imshow("diffImage0_after", diffImage0);
@@ -105,8 +107,6 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		
 		Mat diffImage;
 		absdiff(croppedFrame, emptyBG0,diffImage);
-		
-
 		Mat Qframe = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
 		float threshold = 77.0f;
     	float dist;
