@@ -31,6 +31,7 @@ int niters = 4;
 vector<Mat>blocks;
 Mat emptyBG0; 
 Mat emptyBG;
+Mat CROPPEDFRAME;
 
 double areaQueue(Mat img) {
 	double ans = 0;
@@ -59,9 +60,12 @@ void *process(void *k){
 
 	/*imshow("blocks",blocks[(long) k]);
 	sleep(1);*/
-	Mat croppedFrame = blocks[(long) k];
-	/*resize(croppedFrame,croppedFrame, Size(1080,1920));
-	croppedFrame = transform_and_crop(croppedFrame);*/
+	Mat img = blocks[(long) k];
+	/*int imgrows = img.rows;
+	int imgcols = img.cols;
+	resize(img,img, Size(1920,1080));
+	*/Mat croppedFrame = img; //transform_and_crop(img)
+	//resize(croppedFrame,croppedFrame, Size(imgrows,imgcols));
 	cout << "YES\n";
 	imshow("frame.jpg", croppedFrame);
 	resize(croppedFrame, croppedFrame, Size(360, 240));
