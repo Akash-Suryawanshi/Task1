@@ -10,11 +10,13 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/background_segm.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-
+#include <cstdlib>
+#include <pthread.h>
+#include <unistd.h>
 using namespace std;
 using namespace cv;
 
-int NUM_OF_THREADS = 1;
+int NUM_OF_THREADS = 2;
 //Globals : 
 vector<double> contourAreasQueue;
 vector<double> contourAreasDynamic;	
@@ -31,7 +33,8 @@ Mat croppedFrame0;
 Mat diffImage;
 Mat diffImage0;
 Mat Qframe;
-
+int rc;
+pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 // helper functions
 double areaQueue(Mat img) {
 	double ans = 0;
@@ -84,7 +87,6 @@ void part3(){
 }
 
 void part4(){
-	diffImage0;
 	absdiff(croppedFrame0, emptyBG,diffImage0);
 	imshow("diffImage0", diffImage0);	
 }
@@ -114,15 +116,10 @@ void part6(){
 }
 
 void part7(){
+	Qframe = max(Qframe,Dframe);
 	contourAreasQueue.push_back(areaQueue(Qframe));
 	contourAreasDynamic.push_back(areaDynamic(Dframe));
 }
-
-// void NumberOfThreads(int x){
-//     cin >> file;
-// 	init();
-	
-// }
 
 void Threads_1 (){
 	VideoCapture cap(file);
@@ -142,15 +139,43 @@ void Threads_1 (){
 	cap.release();
 	destroyAllWindows();
 }
-
-void Threads_2(){
-	pthread_t threads[NUM_OF_THREADS];
+void *execute2(void *tmp){
+	cout << "HELP\n";
+	pthread_exit(NULL);
 }
-
-pair<vector<double>,vector<double>> method3(string x,int y){
+void *execute21(void *tmp){
+	part1();
+	part2();
+	part3();
+	part4();
+	part5();
+	part6();
+	part7();
+	pthread_exit(NULL);
+}
+void Threads_2(){
+	VideoCapture cap(file);
+	pthread_t threads[NUM_OF_THREADS]; //2
+	//rc = pthread_create(&threads[i],NULL,execute2);
+	//rc = pthread_create(&threads[i],NULL,execute21);
+	while(1){
+		cap >> frame;
+		if(frame.empty()) break;
+		int i;
+		rc = pthread_create(&threads[0],NULL,execute2,(void *) i);
+		rc = pthread_create(&threads[1],NULL,execute21,(void *) i);
+		pthread_join(threads[0],NULL);
+		pthread_join(threads[1],NULL);
+		char c = (char)waitKey(25);
+		if (c == 27) break;
+	}
+	cap.release();
+	destroyAllWindows();
+}
+pair<vector<double>,vector<double>> method3(string x){
 	file = x;
 	initialize();
-	Threads_1();
+	Threads_2();
 	ofstream MyFile("hull_Q.txt");
 	for (int i = 0; i < contourAreasQueue.size(); i++){
 		MyFile <<  contourAreasQueue[i] << endl;

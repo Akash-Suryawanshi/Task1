@@ -10,7 +10,7 @@ using namespace cv;
 int main() {
 	pair <vector<double>, vector<double>>densities;
 	//densities = readVideo("trafficvideo.mp4");
-	densities = method3("trafficvideo.mp4");
+	densities = method3_final("trafficvideo.mp4",4);
 	vector<double>QueueDensity = densities.first;
 	vector<double>DynamicDensity = densities.second;
 	cout << "framenum" << "," << "queue density" << "," << "dynamic density";
