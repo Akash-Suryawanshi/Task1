@@ -42,7 +42,7 @@ double areaQueue(Mat img) {
 			}
 		}
 	} 
-	return ans/(img.rows * img.cols)*1.25;
+	return ans/(img.rows * img.cols);
 }
 double areaDynamic(Mat img) {
 	double ans = 0;
@@ -64,7 +64,8 @@ void *process(void *k){
 	/*int imgrows = img.rows;
 	int imgcols = img.cols;
 	resize(img,img, Size(1920,1080));
-	*/Mat croppedFrame = img; //transform_and_crop(img)
+	*/Mat croppedFrame = img; 
+	//transform_and_crop(img)
 	//resize(croppedFrame,croppedFrame, Size(imgrows,imgcols));
 	cout << "YES\n";
 	imshow("frame.jpg", croppedFrame);
@@ -116,8 +117,9 @@ void *process(void *k){
 	QueueAreaGlobal += QueueArea;
 	DynamicAreaGlobal += DynamicArea;
 	pthread_mutex_unlock(&mutex2);
+	// pthread_attr_destroy(&attr);
 
-	pthread_exit(NULL);
+	// pthread_exit(NULL);
 }
 
 pair<vector<double>,vector<double>> method3_final(string vid,int x){
@@ -138,12 +140,14 @@ pair<vector<double>,vector<double>> method3_final(string vid,int x){
 	DynamicAreaGlobal = 0.0;
 
 	while(1){
-		Mat frame;
-		cap >> frame;
+		Mat frame0;
+		cap >> frame0;
 		//divide this frame into x blocks and pass each block to each thread
-		if(frame.empty()) break;
+		if(frame0.empty()) break;
 		//vector to store blocks
 	    //img dimensions
+		//transform and crop
+		Mat frame = transform_and_crop(frame0);
 	    int height = frame.rows;
 	    int width = frame.cols;
 	    cout << frame.size();
@@ -169,6 +173,7 @@ pair<vector<double>,vector<double>> method3_final(string vid,int x){
 	        imshow("block " + to_string(i),blocks[i]);
 	        waitKey(0);
 	    }*/
+
 	    pthread_attr_init(&attr);
    		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
@@ -181,16 +186,19 @@ pair<vector<double>,vector<double>> method3_final(string vid,int x){
 			}	
 		}
 		
-		pthread_attr_destroy(&attr);
-		for(int i=0; i<x; i++){
-			cout << "Joined thread " << i << '\n'; 
+		for(int i=x-1; i>=0; i--){
 			pthread_join(threads[i],&status);
+			cout << "Joined thread " << i << '\n';
 		}
 
 		cout << QueueAreaGlobal << ',' << DynamicAreaGlobal << '\n';
 
 		contourAreasQueue.push_back(QueueAreaGlobal);
 		contourAreasDynamic.push_back(DynamicAreaGlobal);
+
+		QueueAreaGlobal = 0;
+		DynamicAreaGlobal = 0;
+
 
 		char c = (char)waitKey(25);
 		if (c == 27) {
