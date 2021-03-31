@@ -26,7 +26,7 @@ double areaQueue(Mat img) {
 			}
 		}
 	} 
-	return ans/(img.rows * img.cols)*1.25;
+	return ans/(img.rows * img.cols);
 }
 double areaDynamic(Mat img) {
 	double ans = 0;
@@ -44,7 +44,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	vector<double> contourAreasDynamic;	
 	Ptr<BackgroundSubtractor> pKNN; // MOG2 background subtractor
 	double varThreshold = 50;
-	int niters = 4;
+	int niters = 2;
 
 
 	VideoCapture cap(x);
@@ -56,7 +56,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	Mat emt = imread("frame.jpg");
 	Mat emt0;
 	Mat emptyBG0 = transform_and_crop(emt);
-	resize(emptyBG0, emptyBG0, Size(360, 240));
+	resize(emptyBG0, emptyBG0, Size(120, 240));
 	cout << emptyBG0.size() << endl;
 	
 	Mat emptyBG;
@@ -64,13 +64,13 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	
 	
 	
-	ofstream MyFile("hull_Q.txt");
+	
 	bool first = true;
 	while (1) {
 		Mat frame; 
 		cap >> frame;
 		
-		int X = 3; // We skip next X frames
+		int X = 7; // We skip next X frames
 		if(!first){
 			bool status;
 			for(int i=0; i<X; i++){
@@ -85,7 +85,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		
 		Mat croppedFrame = transform_and_crop(frame);
 		imshow("frame.jpg", croppedFrame);
-		resize(croppedFrame, croppedFrame, Size(360, 240));
+		resize(croppedFrame, croppedFrame, Size(120, 240));
 
 		pKNN->apply(croppedFrame, Dframe);
 		imshow("FG MASK", Dframe);
@@ -102,30 +102,12 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		threshold(diffImage0, diffImage0, 50, 255, THRESH_BINARY);
     	dilate(diffImage0, diffImage0, Mat(), Point(-1, -1), niters*2);
 		imshow("diffImage0_after", diffImage0);
-
-		
-		
-		Mat diffImage;
-		absdiff(croppedFrame, emptyBG0,diffImage);
-		Mat Qframe = Mat::zeros(diffImage.rows, diffImage.cols, CV_8UC1);
-		float threshold = 77.0f;
-    	float dist;
-		for(int j=0; j<diffImage.rows; ++j){
-        	for(int i=0; i<diffImage.cols; ++i){
-				cv::Vec3b pix = diffImage.at<cv::Vec3b>(j,i);
-				dist = (pix[0]*pix[0] + pix[1]*pix[1] + pix[2]*pix[2]);
-				dist = sqrt(dist);
-				if(dist>threshold){            
-					Qframe.at<unsigned char>(j,i) = 255;
-				}
-			}
-		}
-		imshow("Difference Image", Qframe);
 		
 		//contourAreasQueue.push_back(areaQueue(Qframe));
 		//contourAreasDynamic.push_back(areaDynamic(Dframe));
-		double QueueArea = areaQueue(Qframe);
+		double QueueArea = areaQueue(diffImage0);
 		double DynamicArea = areaDynamic(Dframe);
+		QueueArea = max(QueueArea, DynamicArea);
 
 		for(int i=0; i<=X; i++){
 				contourAreasQueue.push_back(QueueArea);
@@ -140,12 +122,15 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	}
 	cap.release();
 	destroyAllWindows();
-	
-	for (int i = 0; i < contourAreasQueue.size(); i++){
+	ofstream MyFile("QX=7.txt");
+	for (int i = 0; i < 5737; i++){
 		MyFile <<  contourAreasQueue[i] << endl;
 	}
-
 	MyFile.close();
-
+	ofstream MyFile2("DX=7.txt");
+	for (int i = 0; i < 5737; i++){
+		MyFile2 <<  contourAreasDynamic[i] << endl;
+	}
+	MyFile2.close();
 	return make_pair(contourAreasQueue,contourAreasDynamic);
 }

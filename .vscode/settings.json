@@ -10,6 +10,8 @@
         "utility": "cpp",
         "fstream": "cpp",
         "*.tcc": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "iosfwd": "cpp",
+        "ostream": "cpp"
     }
 }
