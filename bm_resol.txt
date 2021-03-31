@@ -1,5 +1,9 @@
 Time Taken by readVideo 
 bm : 472
-120x240: 322, 0.00153356, Percentage Error : 0.168223
+240x480: 363, Q = 0.0231824 Percentage Error : 5.66433, D = 0.00717652, Percentage Error : -nan
+120x240: 322, Q = 0.0913919, Percentage Error : 65.7304, D = 0.0172894, Percentage Error : -nan
+60x120: 336, Q = 0.159883 Percentage Error : 127.602, D = 0.0331491, Percentage Error : -nan
+30x60: 294, Q = 0.224341, Percentage Error : 206.593, D = 0.0543348, Percentage Error : -nan
+
 
 

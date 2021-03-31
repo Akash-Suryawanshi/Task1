@@ -56,7 +56,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	Mat emt = imread("frame.jpg");
 	Mat emt0;
 	Mat emptyBG0 = transform_and_crop(emt);
-	resize(emptyBG0, emptyBG0, Size(240, 480));
+	resize(emptyBG0, emptyBG0, Size(30, 60));
 	cout << emptyBG0.size() << endl;
 	
 	Mat emptyBG;
@@ -86,7 +86,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat croppedFrame = transform_and_crop(frame);
 		imshow("frame.jpg", croppedFrame);
 		cout << croppedFrame.size() << endl;
-		resize(croppedFrame, croppedFrame, Size(240, 480));
+		resize(croppedFrame, croppedFrame, Size(30, 60));
 
 		pKNN->apply(croppedFrame, Dframe);
 		imshow("FG MASK", Dframe);
@@ -123,12 +123,12 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	}
 	cap.release();
 	destroyAllWindows();
-	ofstream MyFile("q240x480.txt");
+	ofstream MyFile("q30x60.txt");
 	for (int i = 0; i < 5737; i++){
 		MyFile <<  contourAreasQueue[i] << endl;
 	}
 	MyFile.close();
-	ofstream MyFile2("d240x480.txt");
+	ofstream MyFile2("d30x60.txt");
 	for (int i = 0; i < 5737; i++){
 		MyFile2 <<  contourAreasDynamic[i] << endl;
 	}
