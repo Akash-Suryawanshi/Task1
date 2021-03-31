@@ -56,7 +56,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	Mat emt = imread("frame.jpg");
 	Mat emt0;
 	Mat emptyBG0 = transform_and_crop(emt);
-	resize(emptyBG0, emptyBG0, Size(120, 240));
+	// resize(emptyBG0, emptyBG0, Size(120, 240));
 	cout << emptyBG0.size() << endl;
 	
 	Mat emptyBG;
@@ -70,7 +70,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat frame; 
 		cap >> frame;
 		
-		int X = 7; // We skip next X frames
+		int X = 0; // We skip next X frames
 		if(!first){
 			bool status;
 			for(int i=0; i<X; i++){
@@ -85,7 +85,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		
 		Mat croppedFrame = transform_and_crop(frame);
 		imshow("frame.jpg", croppedFrame);
-		resize(croppedFrame, croppedFrame, Size(120, 240));
+		// resize(croppedFrame, croppedFrame, Size(120, 240));
 
 		pKNN->apply(croppedFrame, Dframe);
 		imshow("FG MASK", Dframe);
@@ -122,12 +122,12 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	}
 	cap.release();
 	destroyAllWindows();
-	ofstream MyFile("QX=7.txt");
+	ofstream MyFile("qbm.txt");
 	for (int i = 0; i < 5737; i++){
 		MyFile <<  contourAreasQueue[i] << endl;
 	}
 	MyFile.close();
-	ofstream MyFile2("DX=7.txt");
+	ofstream MyFile2("dbm.txt");
 	for (int i = 0; i < 5737; i++){
 		MyFile2 <<  contourAreasDynamic[i] << endl;
 	}
