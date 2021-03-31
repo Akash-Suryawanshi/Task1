@@ -1,1 +1,5 @@
-Time Taken by readVideo : 472
+Time Taken by readVideo 
+bm : 472
+120x240: 322, 0.00153356, Percentage Error : 0.168223
+
+
