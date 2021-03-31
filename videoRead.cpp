@@ -64,7 +64,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	
 	
 	
-	ofstream MyFile("hull_Q.txt");
+	ofstream MyFile("Dynamic_Area_Master.txt");
 	bool first = true;
 	while (1) {
 		Mat frame; 
@@ -131,8 +131,8 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	cap.release();
 	destroyAllWindows();
 	
-	for (int i = 0; i < contourAreasQueue.size(); i++){
-		MyFile <<  contourAreasQueue[i] << endl;
+	for (int i = 0; i < contourAreasDynamic.size(); i++){
+		MyFile <<  contourAreasDynamic[i] << endl;
 	}
 
 	MyFile.close();
