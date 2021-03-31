@@ -21,3 +21,9 @@ double calculateError(string y,string y1){
 	}
 	return sqrt(ans/(double)n);
 }
+
+int main(){
+	string x,y;
+	cin >> x >> y;
+	cout << calculateError(x,y) << '\n';
+}

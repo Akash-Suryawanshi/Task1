@@ -6,7 +6,6 @@
 using namespace std;
 using namespace cv;
 
-
 int main() {
 	pair <vector<double>, vector<double>>densities;
 	densities = readVideo("trafficvideo.mp4");
