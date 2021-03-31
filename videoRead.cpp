@@ -70,7 +70,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		Mat frame; 
 		cap >> frame;
 		
-		int X = 0; // We skip next X frames
+		int X = 11; // We skip next X frames
 		if(!first){
 			bool status;
 			for(int i=0; i<X; i++){
@@ -122,15 +122,15 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	}
 	cap.release();
 	destroyAllWindows();
-	ofstream MyFile("BaseLineQueue.txt");
-	for (int i = 0; i < 5737; i++){
-		MyFile <<  contourAreasQueue[i] << endl;
-	}
-	MyFile.close();
-	ofstream MyFile2("BaseLineDynamic.txt");
-	for (int i = 0; i < 5737; i++){
-		MyFile2 <<  contourAreasDynamic[i] << endl;
-	}
-	MyFile2.close();
+	// ofstream MyFile("QX=11.txt");
+	// for (int i = 0; i < 5737; i++){
+	// 	MyFile <<  contourAreasQueue[i] << endl;
+	// }
+	// MyFile.close();
+	// ofstream MyFile2("DX=11.txt");
+	// for (int i = 0; i < 5737; i++){
+	// 	MyFile2 <<  contourAreasDynamic[i] << endl;
+	// }
+	// MyFile2.close();
 	return make_pair(contourAreasQueue,contourAreasDynamic);
 }
