@@ -64,13 +64,13 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	
 	
 	
-	ofstream MyFile("hull_Q.txt");
+	ofstream MyFile("QueueDensity.txt");
 	bool first = true;
 	while (1) {
 		Mat frame; 
 		cap >> frame;
 		
-		int X = 3; // We skip next X frames
+		int X = 10; // We skip next X frames
 		if(!first){
 			bool status;
 			for(int i=0; i<X; i++){
@@ -126,6 +126,7 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 		//contourAreasDynamic.push_back(areaDynamic(Dframe));
 		double QueueArea = areaQueue(Qframe);
 		double DynamicArea = areaDynamic(Dframe);
+		QueueArea = max(QueueArea,DynamicArea);
 
 		for(int i=0; i<=X; i++){
 				contourAreasQueue.push_back(QueueArea);
@@ -144,8 +145,12 @@ pair<vector<double>,vector<double>> readVideo(string x) {
 	for (int i = 0; i < contourAreasQueue.size(); i++){
 		MyFile <<  contourAreasQueue[i] << endl;
 	}
-
 	MyFile.close();
+	
+	ofstream MyFile2("DynamicDensity.txt");
+	for(int i = 0; i < contourAreasDynamic.size(); i++){
+		MyFile2 << contourAreasDynamic[i] << endl;
+	}
 
 	return make_pair(contourAreasQueue,contourAreasDynamic);
 }
