@@ -17,7 +17,7 @@ double calculateError(string y,string y1){
 		newline >> ch2;
 		n++;
 		if(baseline.eof() || newline.eof()) break;
-		ans += pow(stod(ch1)-stod(ch2),2);
+		ans += pow(stold(ch1)-stold(ch2),2);
 	}
 	return sqrt(ans/(double)n);
 }
@@ -35,7 +35,7 @@ double calculatePercentageError(string y,string y1){
 		newline >> ch2;
 		n++;
 		if(baseline.eof() || newline.eof()) break;
-		ans += abs(stod(ch1)-stod(ch2))/stod(ch1);
+		ans += abs(stold(ch1)-stold(ch2))/stold(ch1);
 	}
 	return (ans*100.0)/n;
 }
