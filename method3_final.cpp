@@ -117,9 +117,8 @@ void *process(void *k){
 	QueueAreaGlobal += QueueArea;
 	DynamicAreaGlobal += DynamicArea;
 	pthread_mutex_unlock(&mutex2);
-	// pthread_attr_destroy(&attr);
-
-	// pthread_exit(NULL);
+	//pthread_attr_destroy(&attr);
+	pthread_exit(NULL);
 }
 
 pair<vector<double>,vector<double>> method3_final(string vid,int x){
@@ -179,7 +178,7 @@ pair<vector<double>,vector<double>> method3_final(string vid,int x){
 
 		for(int i=0; i<x; i++){
 			rc = pthread_create(&threads[i],&attr,process,(void *)i);
-			cout << "Created Thread " << i << '\n';
+			//cout << "Created Thread " << i << '\n';
 			if(rc){
 				cout << "Could not create thread\n";
 				exit(1);
@@ -188,7 +187,7 @@ pair<vector<double>,vector<double>> method3_final(string vid,int x){
 		
 		for(int i=x-1; i>=0; i--){
 			pthread_join(threads[i],&status);
-			cout << "Joined thread " << i << '\n';
+			//cout << "Joined thread " << i << '\n';
 		}
 
 		cout << QueueAreaGlobal << ',' << DynamicAreaGlobal << '\n';
@@ -208,8 +207,6 @@ pair<vector<double>,vector<double>> method3_final(string vid,int x){
 	}
 	cap.release();
 	destroyAllWindows();
-	
-	pthread_exit(NULL);
 
 	return make_pair(contourAreasQueue,contourAreasDynamic);
 }

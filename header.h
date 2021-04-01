@@ -13,3 +13,4 @@ pair<vector<double>,vector<double>> readVideo(string x);
 void transform_and_crop(string x);
 // pair<vector<double>,vector<double>> method3(string x);
 pair<vector<double>,vector<double>> do_parallel(string x);
+pair<vector<double>,vector<double>> method3_final(string x,int y);

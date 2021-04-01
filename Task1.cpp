@@ -9,7 +9,10 @@ using namespace cv;
 
 int main() {
 	pair <vector<double>, vector<double>>densities;
-	densities = readVideo("trafficvideo.mp4");
+	time_t start,end;
+	time(&start);
+	densities = do_parallel("tfv.mp4");
+	time(&end);
 	// densities = method3("trafficvideo.mp4");
 	vector<double>QueueDensity = densities.first;
 	vector<double>DynamicDensity = densities.second;
@@ -21,5 +24,6 @@ int main() {
 		cout << DynamicDensity[i] << "\n";
 		cout << endl;
 	}
+	cout << "Time taken by the program : " << double(end - start) << '\n';
 	return 0;
 }

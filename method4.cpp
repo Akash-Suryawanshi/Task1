@@ -130,11 +130,6 @@ void *method4(void *tid) {
 	cout << QueueArea << ',' << DynamicArea << endl;		
 	pthread_mutex_unlock(&mutex1);
 	
-	first = false;
-	char c = (char)waitKey(25);
-	if (c == 27) {
-		return NULL;
-	}
 	pthread_exit(NULL);
 }
 
@@ -209,6 +204,12 @@ pair<vector<double>,vector<double>> do_parallel(string x){
 		}
 		contourAreasDynamic.clear();
 		contourAreasQueue.clear(); 
+
+		first = false;
+		char c = (char)waitKey(25);
+		if (c == 27) {
+			break;
+		}
 	}
 	cap.release();
 	destroyAllWindows();
