@@ -2,10 +2,10 @@
 #include "header.h"
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <bits/stdc++.h>
 
 using namespace std;
 using namespace cv;
+
 
 int main() {
 	pair <vector<double>, vector<double>>densities;
@@ -13,17 +13,17 @@ int main() {
 	time(&start);
 	densities = readVideo("trafficvideo.mp4");
 	time(&end);
-	// densities = method3_final("trafficvideo.mp4",4);
+	// densities = method3("trafficvideo.mp4");
 	vector<double>QueueDensity = densities.first;
 	vector<double>DynamicDensity = densities.second;
 	cout << "framenum" << "," << "queue density" << "," << "dynamic density";
 	cout << endl;
-	for (int i = 0; i < 5737; i++) {
+	for (int i = 0; i < QueueDensity.size(); i++) {
 		cout << i+1 << ",";
 		cout << QueueDensity[i] << ",";
 		cout << DynamicDensity[i] << "\n";
 		cout << endl;
 	}
-	cout << "Time Taken by readVideo : " << setprecision(10) << double(end - start) << endl;
+	cout << "Time taken by the program : " << double(end - start) << '\n';
 	return 0;
 }
